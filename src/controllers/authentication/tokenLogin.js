@@ -1,0 +1,33 @@
+import prisma from "../../prisma/prismaClient.js"
+import jwt from 'jsonwebtoken'
+
+class TokenLogin {
+    async login(body) {
+        const { email, password } = body;
+
+        const loggedUser = await prisma.user.findFirst({
+            where: {
+                email: email,
+                password: password,
+            },
+            select: {
+                id: true,
+                name: true,
+                Message: true,
+                email: true
+            }
+        })
+
+        if(!loggedUser) return JSON.parse('{"status": 406, "message":"check the data"}')
+
+        const token = jwt.sign({id: loggedUser.id}, process.env.AUTH_CONFIG, {
+            expiresIn: '2h'
+        })
+        return ({
+            token,
+            loggedUser
+        });
+    }
+}
+
+export default TokenLogin

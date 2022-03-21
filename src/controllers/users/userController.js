@@ -1,16 +1,21 @@
-import { json } from 'express';
 import prisma from '../../prisma/prismaClient.js';
-
 
 class UserController {
 
-    async getUsers() {
+    async getUser(_id) {
         try {
-            const allUsers = await prisma.user.findMany()
-            return allUsers;
-
+            const currentUser = await prisma.user.findUnique({
+                where: {id: Number(_id)},
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    Message: true,
+                }
+            })
+            return currentUser
         } catch (err) {
-            console.log(err)
+            return JSON.parse('{"status":404, "message":"fail on search"}')
 
         } finally {
             await prisma.$disconnect();
@@ -25,11 +30,29 @@ class UserController {
             await prisma.user.create({
                 data: { name, email, password }
             })
-            return JSON.parse('{"data":{"status":201, "message":"successfully created"}}');
+            return JSON.parse('{"status":201, "message":"successfully created"}');
         } catch (err) {
-            return JSON.parse('{"data":{"status":304, "message":"fail on create"}}')
+            return JSON.parse('{"status":304, "message":"fail on create"}')
         }
 
+        finally {
+            await prisma.$disconnect();
+        }
+    }
+
+    async updateUser(_id, nameToUpdate) {
+        try {
+            const update = await prisma.user.update({
+                where: { id: Number(_id) },
+                data: {
+                    name: nameToUpdate
+                }
+            })
+            return update;
+
+        } catch (err) {
+            return JSON.parse('{"status": 304, "message":"fail on update"}')
+        }
         finally {
             await prisma.$disconnect();
         }
