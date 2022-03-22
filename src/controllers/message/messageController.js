@@ -4,13 +4,13 @@ import prisma from "../../prisma/prismaClient.js";
 class MessageController {
     //o id do user é obrigatório para assinar as mensagens
 
-    handleToken = (info) => {
-        const { id } = jwt.decode(info.replace('Bearer ', ''));
+    handleToken = (token) => {
+        const { id } = jwt.decode(token.replace('Bearer ', ''));
         return id;
     }
 
-    async creatMessage(info, { title, content } = body) {
-        const userId = this.handleToken(info);
+    async creatMessage(token, { title, content } = body) {
+        const userId = this.handleToken(token);
         try {
             await prisma.message.create({
                 data: {
@@ -28,6 +28,26 @@ class MessageController {
             await prisma.$disconnect();
         }
 
+    }
+
+    async getMessage (token) {
+        const userId = this.handleToken(token);
+
+        try {
+            const result = await prisma.message.findMany({
+                where: {
+                    userId: Number(userId)
+                }
+                
+            });
+            return result;
+
+        } catch (err) {
+            return JSON.parse('{"status":404, "message":"fail on search"}')
+        
+        } finally {
+            await prisma.$disconnect();
+        }
     }
 }
 

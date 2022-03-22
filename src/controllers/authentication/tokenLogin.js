@@ -5,6 +5,7 @@ class TokenLogin {
     async login(body) {
         const { email, password } = body;
 
+
         const loggedUser = await prisma.user.findFirst({
             where: {
                 email: email,
@@ -13,15 +14,15 @@ class TokenLogin {
             select: {
                 id: true,
                 name: true,
-                Message: true,
-                email: true
+                email: true,
+                Message: true
             }
         })
 
-        if(!loggedUser) return JSON.parse('{"status": 406, "message":"check the data"}')
+        if (!loggedUser) return JSON.parse('{"status": 406, "message":"check the data"}')
 
-        const token = jwt.sign({id: loggedUser.id}, process.env.AUTH_CONFIG, {
-            expiresIn: '2h'
+        const token = jwt.sign({ id: loggedUser.id }, process.env.AUTH_CONFIG, {
+            expiresIn: '1h'
         })
         return ({
             token,

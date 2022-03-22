@@ -7,11 +7,19 @@ routerMessage.use(middleware);
 
 routerMessage.post("/create", async (req, res) => {
     const body = req.body
-    const info = req.headers.authorization
+    const token = req.headers.authorization
     
     const client = new MessageController();
-    const data = await client.creatMessage(info, body);
-    res.send(data);
+    const data = await client.creatMessage(token, body);
+    res.status(201).send(data);
+});
+
+routerMessage.get("/", async (req, res) => {
+    const token = req.headers.authorization
+
+    const client = new MessageController();
+    const data = await client.getMessage(token);
+    res.status(200).send(data);
 })
 
 export { routerMessage }

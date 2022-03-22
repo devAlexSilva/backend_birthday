@@ -1,9 +1,8 @@
-import express from 'express'
+import { Router } from 'express'
 import UserController from '../../controllers/users/userController.js'
-//import MessageController from '../controllers/message/messageController.js'
 import { middleware } from '../../controllers/authentication/middleware.js'
 
-const routerUser = express.Router()
+export const routerUser = Router()
 routerUser.use(middleware);
 
 routerUser.get("/:id", async (request, response) => {
@@ -32,6 +31,3 @@ routerUser.put("/:id/update", async (request, response) => {
     const data = await client.updateUser(id, name);
     response.send(data)
 });
-
-
-export { routerUser }
