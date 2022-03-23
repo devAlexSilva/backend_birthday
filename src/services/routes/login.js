@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import TokenLogin from '../../controllers/authentication/tokenLogin.js';
+import TokenLogin from '../../controllers/authenticationController/tokenLogin.js';
 
 const login = Router();
 
