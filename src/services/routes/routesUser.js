@@ -23,7 +23,7 @@ routerUser.post("/create", async (request, response) => {
     response.send(data)
 });
 
-routerUser.put("/:id/update", async (request, response) => {
+routerUser.put("/update/:id", async (request, response) => {
     const client = new UserController();
     const { id } = request.params;
     const { name } = request.body
@@ -31,3 +31,11 @@ routerUser.put("/:id/update", async (request, response) => {
     const data = await client.updateUser(id, name);
     response.send(data)
 });
+
+routerUser.delete("/delete/:id", async (req, res) => {
+    const id = req.params;
+
+    const client = new UserController();
+    const data = await client.deleteUser(id);
+    res.send(data);
+})

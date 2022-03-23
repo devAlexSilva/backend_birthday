@@ -11,11 +11,12 @@ class MessageController {
 
     async creatMessage(token, { title, content } = body) {
         const userId = this.handleToken(token);
+        
         try {
             await prisma.message.create({
                 data: {
-                    title,
-                    content,
+                    title: title,
+                    content: content,
                     userId: Number(userId)
                 }
             })
@@ -30,7 +31,7 @@ class MessageController {
 
     }
 
-    async getMessage (token) {
+    async getMessage(token) {
         const userId = this.handleToken(token);
 
         try {
@@ -38,17 +39,52 @@ class MessageController {
                 where: {
                     userId: Number(userId)
                 }
-                
+
             });
             return result;
 
         } catch (err) {
             return JSON.parse('{"status":404, "message":"fail on search"}')
-        
+
         } finally {
             await prisma.$disconnect();
         }
     }
+
+    async updateMessage({ id }, { title, content } = body) {
+        try {
+            const result = await prisma.message.update({
+                where: { id: Number(id) },
+                data: {
+                    title: title,
+                    content: content
+                }
+            })
+            return result;
+
+        } catch (err) {
+            return JSON.parse('{"status":304, "message":"not modified"}');
+
+        } finally {
+            await prisma.$disconnect();
+        }
+    }
+
+    async deleteMessage({ id }) {
+        try {
+            await prisma.message.delete({
+                where: { id: Number(id) }
+            })
+            return JSON.parse('{"status":200, "message":"deleted successfully"}')
+        
+        } catch (err) {
+            return JSON.parse('{"status":304, "message":"not modified"}');
+
+        } finally {
+            await prisma.$disconnect();
+        }
+    }
+
 }
 
 export default MessageController

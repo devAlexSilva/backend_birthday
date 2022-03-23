@@ -11,7 +11,7 @@ routerMessage.post("/create", async (req, res) => {
     
     const client = new MessageController();
     const data = await client.creatMessage(token, body);
-    res.status(201).send(data);
+    res.send(data);
 });
 
 routerMessage.get("/", async (req, res) => {
@@ -20,6 +20,23 @@ routerMessage.get("/", async (req, res) => {
     const client = new MessageController();
     const data = await client.getMessage(token);
     res.status(200).send(data);
+});
+
+routerMessage.put("/update/:id", async (req, res) => {
+    const id = req.params;
+    const body = req.body;
+
+    const client = new MessageController();
+    const data = await client.updateMessage(id, body);
+    res.send(data);
+})
+
+routerMessage.delete("/delete/:id", async (req, res) => {
+    const id = req.params;
+
+    const client = new MessageController();
+    const data = await client.deleteMessage(id);
+    res.send(data);
 })
 
 export { routerMessage }

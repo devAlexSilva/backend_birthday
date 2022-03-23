@@ -5,7 +5,7 @@ class UserController {
     async getUser(_id) {
         try {
             const currentUser = await prisma.user.findUnique({
-                where: {id: Number(_id)},
+                where: { id: Number(_id) },
                 select: {
                     id: true,
                     name: true,
@@ -57,7 +57,25 @@ class UserController {
             await prisma.$disconnect();
         }
     }
+
+    async deleteUser({ id }) {
+        try {
+            await prisma.user.delete({
+                where: { id: Number(id) }
+            });
+            return JSON.parse('{"status":200, "message":"deleted successfully"}');
+
+        } catch (err) {
+            return JSON.parse('{"status":304, "message":"fail on delete"}');
+
+        }
+        finally {
+            await prisma.$disconnect();
+
+        }
+    }
 }
+
 
 
 export default UserController;
