@@ -9,7 +9,7 @@ class MessageController {
         return id;
     }
 
-    async creatMessage(token, { title, content } = body) {
+    async creatMessage(token, { title, content, dateBirthday } = body) {
         const userId = this.handleToken(token);
         
         try {
@@ -17,6 +17,7 @@ class MessageController {
                 data: {
                     title: title,
                     content: content,
+                    dateBirthday: dateBirthday,
                     userId: Number(userId)
                 }
             })
@@ -51,13 +52,19 @@ class MessageController {
         }
     }
 
-    async updateMessage({ id }, { title, content } = body) {
+    async updateMessage({ id }, { title, content, dateBirthday } = body) {
+        const userId = this.handleToken(token);
+        
         try {
             const result = await prisma.message.update({
-                where: { id: Number(id) },
+                where: { 
+                    id: Number(id),
+                    userId: Number(userId)
+                 },
                 data: {
                     title: title,
-                    content: content
+                    content: content,
+                    dateBirthday: dateBirthday,
                 }
             })
             return result;
@@ -71,9 +78,14 @@ class MessageController {
     }
 
     async deleteMessage({ id }) {
+        const userId = this.handleToken(token);
+        
         try {
             await prisma.message.delete({
-                where: { id: Number(id) }
+                where: { 
+                    id: Number(id),
+                    userId: userId
+                }
             })
             return JSON.parse('{"status":200, "message":"deleted successfully"}')
         

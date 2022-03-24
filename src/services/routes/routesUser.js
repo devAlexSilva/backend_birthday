@@ -11,17 +11,11 @@ routerUser.get("/:id", async (request, response) => {
 
     const data = await client.getUser(id);
     
-    response.send(data)
+    data ? response.json(data) : response.sendStatus(404); //handle with case of come empty without error
     
-    data ? response.json(data) : response.sendStatus(404); //pode vim vazio sem dar erro
 });
 
-routerUser.post("/create", async (request, response) => {
-    const client = new UserController();
-
-    const data = await client.createUser(request);
-    response.send(data)
-});
+// i can't use router "/create" without middleware, so i took it out of here
 
 routerUser.put("/update/:id", async (request, response) => {
     const client = new UserController();
@@ -29,7 +23,7 @@ routerUser.put("/update/:id", async (request, response) => {
     const { name } = request.body
 
     const data = await client.updateUser(id, name);
-    response.send(data)
+    response.json(data)
 });
 
 routerUser.delete("/delete/:id", async (req, res) => {
@@ -37,5 +31,5 @@ routerUser.delete("/delete/:id", async (req, res) => {
 
     const client = new UserController();
     const data = await client.deleteUser(id);
-    res.send(data);
+    res.json(data);
 })
