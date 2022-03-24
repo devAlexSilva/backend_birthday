@@ -1,46 +1,48 @@
-import { Schedule } from './schedule.js'
 import nodemailer from 'nodemailer'
 
-
-class SendEmail {
-
-    // async..await is not allowed in global scope, must use a wrapper
-    conect = async () => {
-        // Generate test SMTP service account from ethereal.email
-        // Only needed if you don't have a real mail account for testing
-        let testAccount = await nodemailer.createTestAccount();
-
-        // create reusable transporter object using the default SMTP transport
-        let transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: testAccount.user, // generated ethereal user
-                pass: testAccount.pass, // generated ethereal password
-            },
-        });
-
-
-        send = async () => {
-            // send mail with defined transport object
-            let info = await transporter.sendMail({
-                from: '"Fred Foo 👻" <foo@example.com>', // sender address
-                to: "bar@example.com, baz@example.com", // list of receivers
-                subject: "Hello ✔", // Subject line
-                text: "Hello world?", // plain text body
-                html: "<b>Hello world?</b>", // html body
-            });
-
-            console.log("Message sent: %s", info.messageId);
-            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-            // Preview only available when sending through an Ethereal account
-            console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+const conect = () => {
+    const transport = nodemailer.createTransport({
+        host: "smtp.gmail.com", //smtp.mailtrap.io
+        port: 465, // 2525
+        auth: {
+            user: process.env.USER_EMAIL,
+            pass: process.env.PASS_EMAIL
         }
-    }
+    });
 
+    const mailOptions = {
+        from: '"teste de envio" <birthdaywebxyz@gmail.com>',
+        to: 'eoqalex@gmail.com',
+        subject: 'testando os envios de emails',
+        text: 'For clients with plaintext support only',
+        html: '<p>For clients that do not support AMP4EMAIL or amp content is not valid</p>',
+        amp: `<!doctype html>
+    <html ⚡4email>
+      <head>
+        <meta charset="utf-8">
+        <style amp4email-boilerplate>body{visibility:hidden}</style>
+        <script async src="https://cdn.ampproject.org/v0.js"></script>
+        <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
+      </head>
+      <body>
+        <p>Image: <amp-img src="https://cldup.com/P0b1bUmEet.png" width="16" height="16"/></p>
+        <p>GIF (requires "amp-anim" script in header):<br/>
+          <amp-anim src="https://cldup.com/D72zpdwI-i.gif" width="500" height="350"/></p>
+      </body>
+    </html>`,
+        /*attachments: [
+            {
+                filename: 'mailtrap.png',
+                path: __dirname + '/mailtrap.png',
+                cid: 'uniq-mailtrap.png'
+            }
+        ]*/
+    };
+
+    const result = transport.sendMail(mailOptions, (error, info) => {
+        error ? console.log(error)
+            : console.log('Message sent: ', info.messageId);
+    });
+    return result
 }
-
-export { SendEmail }
+export { conect }
