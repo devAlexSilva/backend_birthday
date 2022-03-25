@@ -1,48 +1,72 @@
 import nodemailer from 'nodemailer'
+import pkg from 'googleapis'
 
-const conect = () => {
-    const transport = nodemailer.createTransport({
-        host: "smtp.gmail.com", //smtp.mailtrap.io
-        port: 465, // 2525
-        auth: {
-            user: process.env.USER_EMAIL,
-            pass: process.env.PASS_EMAIL
-        }
+const { google } = pkg;
+const OAuth2 = google.auth.OAuth2;
+
+
+/*
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    secure: true,
+    auth: {
+        type: 'OAuth2',
+        accessUrl: true,
+        clientId: process.env.CLIENT_OAUTH,
+        clientSecret: process.env.CHAVE_OAUTH
+    }
+});
+*/
+const createTransporter = async () => {
+    const oauth2Client = new OAuth2(
+        process.env.CLIENT_OAUTH,
+        process.env.CHAVE_OAUTH,
+        "https://developers.google.com/oauthplayground"
+    );
+
+    oauth2Client.setCredentials({
+        refresh_token: process.env.REFRESH_TOKEN
     });
 
-    const mailOptions = {
-        from: '"teste de envio" <birthdaywebxyz@gmail.com>',
-        to: 'eoqalex@gmail.com',
-        subject: 'testando os envios de emails',
-        text: 'For clients with plaintext support only',
-        html: '<p>For clients that do not support AMP4EMAIL or amp content is not valid</p>',
-        amp: `<!doctype html>
-    <html ⚡4email>
-      <head>
-        <meta charset="utf-8">
-        <style amp4email-boilerplate>body{visibility:hidden}</style>
-        <script async src="https://cdn.ampproject.org/v0.js"></script>
-        <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
-      </head>
-      <body>
-        <p>Image: <amp-img src="https://cldup.com/P0b1bUmEet.png" width="16" height="16"/></p>
-        <p>GIF (requires "amp-anim" script in header):<br/>
-          <amp-anim src="https://cldup.com/D72zpdwI-i.gif" width="500" height="350"/></p>
-      </body>
-    </html>`,
-        /*attachments: [
-            {
-                filename: 'mailtrap.png',
-                path: __dirname + '/mailtrap.png',
-                cid: 'uniq-mailtrap.png'
+    const accessToken = await new Promise((resolve, reject) => {
+        oauth2Client.getAccessToken((err, token) => {
+            if (err) {
+                reject();
             }
-        ]*/
-    };
-
-    const result = transport.sendMail(mailOptions, (error, info) => {
-        error ? console.log(error)
-            : console.log('Message sent: ', info.messageId);
+            resolve(token);
+        });
     });
-    return result
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            type: "OAuth2",
+            user: process.env.USER_EMAIL,
+            accessToken,
+            clientId: process.env.CLIENT_OAUTH,
+            clientSecret: process.env.CHAVE_OAUTH,
+            refreshToken: process.env.REFRESH_TOKEN
+        },
+        tls: {
+            rejectUnauthorized: false
+          }
+        
+    });
+    return transporter
+};
+
+const sendEmail = async (emailOptions) => {
+    let emailTransporter = await createTransporter();
+    await emailTransporter.sendMail(emailOptions);
 }
-export { conect }
+
+sendEmail({
+    subject: "Test",
+    text: "I am sending an email from nodemailer!",
+    to: "eoqalex@gmail.com",
+    from: process.env.USER_EMAIL
+});
+
+
+
+export { createTransporter }

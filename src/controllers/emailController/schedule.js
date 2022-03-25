@@ -1,6 +1,6 @@
 import pkg from 'node-cron'
 import prisma from '../../prisma/prismaClient.js'
-import { conect } from './sendEmail.js';
+import { createTransporter } from '../../services/sendEmail.js'
 
 //set timer
 //search messages in db 
@@ -16,7 +16,8 @@ const Schedule = {
         schedule(`${testTimer}`, async () => {
             const matchMessage = await Schedule.getDatas();
             console.log(matchMessage);
-            conect();
+            
+            await createTransporter();
         },
             {
                 scheduled: true,
@@ -51,9 +52,7 @@ const Schedule = {
         } catch (err) {
             return err
         }
-        finally {
-            await prisma.$disconnect();
-        }
+        
     }
 
 }

@@ -22,6 +22,7 @@
     "nodemailer": "^6.7.3"
   },
   "devDependencies": {
+    "googleapis": "^98.0.0",
     "prisma": "^3.11.0"
   }
 }
