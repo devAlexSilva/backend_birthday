@@ -1,3 +1,5 @@
+//CRUD de usuarios 
+
 import prisma from '../prisma/prismaClient.js';
 
 class UserController {

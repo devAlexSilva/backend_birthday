@@ -1,3 +1,5 @@
+//cria o user e faz o login gerando o token (rota sem auth)
+
 import { Router } from 'express'
 import TokenLogin from '../../controllers/authenticationController/tokenLogin.js';
 import UserController from '../../controllers/userController.js';
@@ -12,10 +14,9 @@ login.post("/create", async (request, response) => {
 });
 
 login.post("/login", async (request, response) => {
-    const client = new TokenLogin();
     const body = request.body;
 
-    const data = await client.login(body);
+    const data = await TokenLogin(body);
     response.send(data);
 });
 

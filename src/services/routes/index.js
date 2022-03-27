@@ -1,3 +1,5 @@
+//recebe todas as rotas com e sem auth para enviar pro App
+
 import { Router } from "express"
 import { login } from "./login.js"
 import { routerMessage } from "./routerMessage.js";

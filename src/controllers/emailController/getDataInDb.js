@@ -1,3 +1,6 @@
+//esse arquivo apenas faz a busca no DB quando chamado no scheduler
+//passando os dados que fazem match para o emailRecipient
+
 import prisma from '../../prisma/prismaClient.js'
 
     const getDatas = async () => {

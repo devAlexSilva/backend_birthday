@@ -1,3 +1,5 @@
+//cria o transporter com a configuração de quem envia o email
+
 import nodemailer from 'nodemailer'
 import pkg from 'googleapis'
 

@@ -1,3 +1,5 @@
+//middleware para controlar acesso nas rotas com auth
+
 import jwt from 'jsonwebtoken'
 
 export const middleware = (req, res, next) => {

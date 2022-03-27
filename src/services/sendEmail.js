@@ -1,3 +1,5 @@
+// arquivo para executar o envio de e-mails
+
 import createTransporter from '../controllers/emailController/configTransporter.js'
 import whoReceiveEmail from '../controllers/emailController/emailRecipient.js'
 

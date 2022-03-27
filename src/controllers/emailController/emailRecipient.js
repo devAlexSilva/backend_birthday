@@ -1,5 +1,4 @@
 import bodyHtml from './bodyEmail.js'
-import getDatas from './getDataInDb.js'
 
 //a função desse arquivo é montar a menssagem:
 /**

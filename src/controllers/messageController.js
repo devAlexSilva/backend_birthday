@@ -1,8 +1,9 @@
+//CRUD das menssagens de cada usuario
+
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/prismaClient.js";
 
 class MessageController {
-    //o id do user é obrigatório para assinar as mensagens
 
     handleToken = (token) => {
         const { id } = jwt.decode(token.replace('Bearer ', ''));
