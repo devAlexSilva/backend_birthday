@@ -3,20 +3,37 @@
 import pkg from 'node-cron'
 import email from './sendEmail.js'
 import getDatas from '../controllers/emailController/getDataInDb.js'
+import bodyHtml from '../controllers/emailController/bodyEmail.js'
+import crawler from './crawler.js'
 
 
 const { schedule } = pkg;
-const productionTimer = '1 0 * * *';
-//let testTimer = '*/10 * * * * *';
+//const Timer = '1 0 * * *';
+const Timer = '*/20 * * * * *';
 
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>
 //all day, all month, ever 0 hour and 1 minutes verify in DB if there is any message for the next day
-const startSchedule = schedule(`${productionTimer}`, async () => {
-    //const matchMessage = await getDatas();
-    console.log('ddd');
+const startSchedule = schedule(`${Timer}`, async () => {
+    const matchMessage = await getDatas();
+    
+    if (matchMessage) {
+        const { innerText, src } = await crawler();
+        const bodyEmail = bodyHtml(innerText, src);
 
-    //await email();
+        const dataUser = await matchMessage.map(data => {
+            return data.user.email
+        });
+
+        const whoReceiveEmail = {
+            subject: "Testando envio de email com signos",
+            html: `${bodyEmail}`,
+            to: `${dataUser}`,
+            from: process.env.USER_EMAIL
+        }
+
+        await email(whoReceiveEmail);
+    }
 },
     {
         scheduled: true,

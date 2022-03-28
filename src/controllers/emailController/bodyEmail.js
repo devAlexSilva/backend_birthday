@@ -1,6 +1,8 @@
 // a função desse arquivo é gerar o body do email
 
-const bodyHtml = '<!DOCTYPE html>'+
+const bodyHtml = (innerText, src) => {
+  const content = 
+'<!DOCTYPE html>'+
 '<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">'+
 '<head>'+
   '<meta charset="UTF-8">'+
@@ -45,8 +47,8 @@ const bodyHtml = '<!DOCTYPE html>'+
                     '<table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">'+
                       '<tr>'+
                         '<td style="width:260px;padding:0;vertical-align:top;color:#153643;">'+
-                          '<p style="margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><img src="https://assets.codepen.io/210284/left.gif" alt="" width="260" style="height:auto;display:block;" /></p>'+
-                          '<p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan dictum, est nisi libero ultricies ipsum, in posuere mauris neque at erat.</p>'+
+                          `<p style="margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><img src="${src}" alt="" width="260" style="height:auto;display:block;" /></p>`+
+                          `<p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">${innerText}</p>`+
                           '<p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://www.example.com" style="color:#ee4c50;text-decoration:underline;">Blandit ipsum volutpat sed</a></p>'+
                         '</td>'+
                         '<td style="width:20px;padding:0;font-size:0;line-height:0;">&nbsp;</td>'+
@@ -94,4 +96,7 @@ const bodyHtml = '<!DOCTYPE html>'+
 '</body>'+
 '</html>'
 
+return content
+
+}
 export default bodyHtml

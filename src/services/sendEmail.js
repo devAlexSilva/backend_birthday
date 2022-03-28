@@ -1,12 +1,11 @@
 // arquivo para executar o envio de e-mails
-
 import createTransporter from '../controllers/emailController/configTransporter.js'
-import whoReceiveEmail from '../controllers/emailController/emailRecipient.js'
 
 
-const email = async () => {    
+const email = async (options) => {    
     let emailTransporter = await createTransporter(); //retornando uma conexão segura com o Oauth2
-    await emailTransporter.sendMail(whoReceiveEmail);
+    await emailTransporter.sendMail(options);
+    console.log('done');
 }
 
 
