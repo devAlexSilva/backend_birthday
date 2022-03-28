@@ -27,7 +27,7 @@ const createTransporter = async () => {
         });
     });
 
-    const transporter = nodemailer.createTransport({
+   const transporter = nodemailer.createTransport({
         //config para teste no mailtrap
 
         host: 'smtp.mailtrap.io',
@@ -36,10 +36,10 @@ const createTransporter = async () => {
             user: process.env.USER_EMAIL_TRAP,
             pass: process.env.PASS_EMAIL_TRAP
         },
-        
+       
         //config oficial
-
-        /*service: "gmail",
+/*
+        service: "gmail",
          auth: {
              type: "OAuth2",
              user: process.env.USER_EMAIL,
@@ -48,9 +48,9 @@ const createTransporter = async () => {
              clientSecret: process.env.CHAVE_OAUTH,
              refreshToken: process.env.REFRESH_TOKEN
          },
-        tls: {
+  */      tls: {
             rejectUnauthorized: false
-        }*/
+        }
     });
     
     return transporter
