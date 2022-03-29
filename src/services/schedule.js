@@ -8,14 +8,13 @@ import crawler from './crawler.js'
 
 
 const { schedule } = pkg;
-//const Timer = '1 0 * * *';
-const Timer = '*/20 * * * * *';
+const Timer = '1 0 * * *';
+//const Timer = '*/20 * * * * *'; timer to test every 20 seconds call the scheduler
 
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>
 //all day, all month, ever 0 hour and 1 minutes verify in DB if there is any message for the next day
 const startSchedule = schedule(`${Timer}`, async () => {
-    console.log('aaa')
 
     const matchMessage = await getDatas();
     if (matchMessage) {
@@ -23,7 +22,6 @@ const startSchedule = schedule(`${Timer}`, async () => {
         const bodyEmail = bodyHtml(innerText, src);
 
         matchMessage.map(async (data) => {
-
             const whoReceiveEmail = {
                 subject: "Testando envio de email com signos",
                 html: `${bodyEmail}`,

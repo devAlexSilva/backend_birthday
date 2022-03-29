@@ -9,8 +9,9 @@ const selectDate = (date) => {
   let sign = 0;
   date = date.replace('-', '');
   date = [...date];
+
   if (date[2] === '0') date.splice(2, 1);
-  console.log(date);
+
   if (date[1] === '0') {
     date[1] = date[2];
     date[2] = '0';
@@ -21,10 +22,9 @@ const selectDate = (date) => {
     date[2] = date[1];
     date[1] = memory;
   }
-  date = date.join('');
 
+  date = date.join('');
   date = Number(date) / 100;
-  console.log(date)
 
   if (date > 3.20 && date <= 4.20) return sign = 1
   else if (date > 4.20 && date <= 5.20) return sign = 2
@@ -38,8 +38,8 @@ const selectDate = (date) => {
   else if (date > 12.21 && date <= 1.20) return sign = 10
   else if (date > 1.20 && date <= 2.18) return sign = 11
   else return sign = 12
-
 }
+
 const sign = selectDate(currentDate);
 console.log('the return of the sign is: ', sign);
 
