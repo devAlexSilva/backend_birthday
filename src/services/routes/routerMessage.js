@@ -23,19 +23,21 @@ routerMessage.get("/", async (req, res) => {
 });
 
 routerMessage.put("/update/:id", async (req, res) => {
-    const id = req.params;
+    const token = req.headers.authorization
+    const { id }= req.params;
     const body = req.body;
 
     const client = new MessageController();
-    const data = await client.updateMessage(id, body);
+    const data = await client.updateMessage(id, body, token);
     res.send(data);
 })
 
 routerMessage.delete("/delete/:id", async (req, res) => {
-    const id = req.params;
-
+    const token = req.headers.authorization
+    const { id } = req.params;
+    
     const client = new MessageController();
-    const data = await client.deleteMessage(id);
+    const data = await client.deleteMessage(id, token);
     res.send(data);
 })
 

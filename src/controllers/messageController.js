@@ -53,7 +53,7 @@ class MessageController {
         }
     }
 
-    async updateMessage({ id }, { title, content, dateBirthday } = body) {
+    async updateMessage(id, token, { title, content, dateBirthday } = body) {
         const userId = this.handleToken(token);
         
         try {
@@ -78,14 +78,15 @@ class MessageController {
         }
     }
 
-    async deleteMessage({ id }) {
+    async deleteMessage(id, token) {
         const userId = this.handleToken(token);
+        console.log(id)
         
         try {
             await prisma.message.delete({
                 where: { 
                     id: Number(id),
-                    userId: userId
+                   // userId: Number(userId)
                 }
             })
             return JSON.parse('{"status":200, "message":"deleted successfully"}')
