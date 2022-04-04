@@ -8,12 +8,12 @@ import crawler from './crawler.js'
 
 
 const { schedule } = pkg;
-const Timer = '1 0 * * *';
-//const Timer = '*/20 * * * * *'; timer to test every 20 seconds call the scheduler
+const Timer = '0 3 * * *';
+//const Timer = '*/20 * * * * *';// timer to test every 20 seconds call the scheduler
 
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>
-//all day, all month, ever 0 hour and 1 minutes verify in DB if there is any message for the next day
+//all day, all month, ever 3 hour verify in DB if there is any message for the next day
 const startSchedule = schedule(`${Timer}`, async () => {
 
     const matchMessage = await getDatas();
@@ -29,7 +29,7 @@ const startSchedule = schedule(`${Timer}`, async () => {
                 from: process.env.USER_EMAIL
             }
 
-            //await email(whoReceiveEmail);
+            await email(whoReceiveEmail);
         });
     }
 },

@@ -10,7 +10,7 @@ routerMessage.post("/create", async (req, res) => {
     const token = req.headers.authorization
     
     const client = new MessageController();
-    const data = await client.creatMessage(token, body);
+    const data = await client.createMessage(token, body);
     res.send(data);
 });
 
@@ -22,6 +22,15 @@ routerMessage.get("/", async (req, res) => {
     res.status(200).send(data);
 });
 
+routerMessage.get("/:id", async (req, res) => {
+    const token = req.headers.authorization
+    const id = req.params
+
+    const client = new MessageController();
+    const data = await client.getMessageById(token, id);
+    res.status(200).send(data);
+});
+
 routerMessage.put("/update/:id", async (req, res) => {
     const token = req.headers.authorization
     const { id }= req.params;
@@ -30,7 +39,7 @@ routerMessage.put("/update/:id", async (req, res) => {
     const client = new MessageController();
     const data = await client.updateMessage(id, body, token);
     res.send(data);
-})
+});
 
 routerMessage.delete("/delete/:id", async (req, res) => {
     const token = req.headers.authorization
