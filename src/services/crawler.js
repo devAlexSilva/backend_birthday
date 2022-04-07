@@ -1,6 +1,5 @@
 import puppeteer from 'puppeteer'
 
-//const date = '28-03'; //the shit of site that i'm pooling info has a problem, sometime don't find the date.
 
 const dateLocal = new Date().toLocaleString('pt-BR', { timezone: 'America/Sao_Paulo' });
 const currentDate = dateLocal.slice(0, 5).replace('/', '-');
@@ -48,27 +47,24 @@ const crawler = async () => {
   const page = await browser.newPage();
   await page.goto(`https://www.metropoles.com/vida-e-estilo/horoscopo/horoscopo-2022-confira-a-previsao-de-hoje-${currentDate}-para-seu-signo`);
 
-  console.log('in crawler')
-
   const getSigno = await page.evaluate(() => {
     const nodeList = document.querySelectorAll('.m-wrapper .m-content .columns');
     let arrayList = [...nodeList];
+
     //take the field of the crawler's results according with the sign (date)
     let formated = arrayList.map(item => {
       return obj = {
         imgOfSign: item.children[0].dataset.src,
-        textOfSign: item.children[1].innerText //options: innerText or innerHTML
+        textOfSign: item.children[1].innerHTML //options: innerText or innerHTML
       }
     });
 
     return formated;
   })
 
-
   await browser.close();
   return getSigno
 }
-
 
 export { crawler, sign }
 

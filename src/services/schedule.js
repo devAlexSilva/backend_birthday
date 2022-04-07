@@ -1,5 +1,4 @@
 //arquivo que faz o agendamento chamando os metodos que devem ser executados
-
 import pkg from 'node-cron'
 import email from './sendEmail.js'
 import getDatas from '../controllers/emailController/getDataInDb.js'
@@ -8,8 +7,8 @@ import { crawler, sign } from './crawler.js'
 
 
 const { schedule } = pkg;
-//const Timer = '1 3 * * *';
-const Timer = '*/15 * * * * *';// timer to test every 20 seconds call the scheduler
+const Timer = '30 3 * * *';
+//const Timer = '*/15 * * * * *';// timer to test every 20 seconds call the scheduler
 
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>

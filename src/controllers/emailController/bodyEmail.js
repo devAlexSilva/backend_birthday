@@ -38,7 +38,7 @@ const bodyHtml = (innerText, src) => {
               '<table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">'+
                 '<tr>'+
                   '<td style="padding:0 0 36px 0;color:#153643;">'+
-                    '<h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Não esqueça do Aniversário</h1>'+
+                    '<h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Não esqueça o Aniversário</h1>'+
                     '<p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus adipiscing felis, sit amet blandit ipsum volutpat sed. Morbi porttitor, eget accumsan et dictum, nisi libero ultricies ipsum, posuere neque at erat.</p>'+
                     '<p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://www.example.com" style="color:#ee4c50;text-decoration:underline;">In tempus felis blandit</a></p>'+
                   '</td>'+
