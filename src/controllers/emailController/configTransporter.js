@@ -48,9 +48,10 @@ const createTransporter = async () => {
              clientSecret: process.env.CHAVE_OAUTH,
              refreshToken: process.env.REFRESH_TOKEN
          },
-  */      tls: {
-            rejectUnauthorized: false
-        }
+         tls: {
+             rejectUnauthorized: false
+            }
+*/
     });
     
     return transporter
