@@ -38,3 +38,10 @@ o que é opcional, basta conferir a [documentação do noidemailer](https://node
 * nodemailer (envio de email)
 * puppeteer
 * dotenv e cors
+
+## Video
+
+
+
+https://user-images.githubusercontent.com/81701720/162548367-bed00a0e-5feb-4b75-aa08-32e41e0dade7.mp4
+
