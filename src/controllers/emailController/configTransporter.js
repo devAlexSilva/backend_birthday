@@ -27,33 +27,32 @@ const createTransporter = async () => {
         });
     });
 
-   const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         //config para teste no mailtrap
+        /*
+                host: 'smtp.mailtrap.io',
+                port: 2525,
+                auth: {
+                    user: process.env.USER_EMAIL_TRAP,
+                    pass: process.env.PASS_EMAIL_TRAP
+                },
+               */
 
-        host: 'smtp.mailtrap.io',
-        port: 2525,
-        auth: {
-            user: process.env.USER_EMAIL_TRAP,
-            pass: process.env.PASS_EMAIL_TRAP
-        },
-       
         //config oficial
-/*
         service: "gmail",
-         auth: {
-             type: "OAuth2",
-             user: process.env.USER_EMAIL,
-             accessToken,
-             clientId: process.env.CLIENT_OAUTH,
-             clientSecret: process.env.CHAVE_OAUTH,
-             refreshToken: process.env.REFRESH_TOKEN
-         },
-         tls: {
-             rejectUnauthorized: false
-            }
-*/
+        auth: {
+            type: "OAuth2",
+            user: process.env.USER_EMAIL,
+            accessToken,
+            clientId: process.env.CLIENT_OAUTH,
+            clientSecret: process.env.CHAVE_OAUTH,
+            refreshToken: process.env.REFRESH_TOKEN
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
     });
-    
+
     return transporter
 };
 

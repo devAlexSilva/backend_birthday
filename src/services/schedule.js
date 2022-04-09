@@ -7,9 +7,8 @@ import { crawler, sign } from './crawler.js'
 
 
 const { schedule } = pkg;
-const Timer = '30 3 * * *';
-//const Timer = '*/15 * * * * *';// timer to test every 20 seconds call the scheduler
-
+const Timer = '* 5 * * *';
+//const Timer = '29 21 * * *';// timer to test every 20 seconds call the scheduler
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>
 //all day, all month, ever 3 hour verify in DB if there is any message for the next day

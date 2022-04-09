@@ -40,7 +40,6 @@ const selectDate = (date) => {
 }
 
 const sign = selectDate(currentDate);
-console.log('the return of the sign is: ', sign);
 
 const crawler = async () => {
   const browser = await puppeteer.launch();
