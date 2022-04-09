@@ -21,11 +21,11 @@ o que é opcional, basta conferir a [documentação do noidemailer](https://node
 - autenticação de login e geração de token - ok
 - agendamento do envio de emails - ok
 - configuração de segurança Oauth2 pro gmail ok
-- coleta de dados em sites de horoscopo
+- coleta de dados em sites de horoscopo ok
+- testes integrado com frontend ok
 
 ***Em fase de desenvolvimento***  
-- personalização de emails
-- testes integrado com frontend
+- personalização de emails (falta dar um toque especial de design) 
 
 ## Stacks e libs utilizadas
 
@@ -43,5 +43,7 @@ o que é opcional, basta conferir a [documentação do noidemailer](https://node
 
 
 
-https://user-images.githubusercontent.com/81701720/162548367-bed00a0e-5feb-4b75-aa08-32e41e0dade7.mp4
+
+
+https://user-images.githubusercontent.com/81701720/162550219-40f0415d-a544-43f2-b859-e2a03360b123.mp4
 
