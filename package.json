@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "googleapis": "^100.0.0",
     "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "node-cron": "^3.0.0",
@@ -23,7 +24,6 @@
     "puppeteer": "^13.5.1"
   },
   "devDependencies": {
-    "googleapis": "^98.0.0",
     "prisma": "^3.11.1"
   }
 }
