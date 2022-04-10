@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --es-module-specifier-resolution=node src/services/app.js",
+    "start": "node src/services/app.js",
     "dev": "nodemon src/services/app.js"
   },
   "keywords": [],
