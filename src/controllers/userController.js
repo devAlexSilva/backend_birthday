@@ -1,5 +1,5 @@
 //CRUD de usuarios 
-
+import bcrypt from 'bcrypt'
 import prisma from '../prisma/prismaClient.js';
 
 class UserController {
@@ -28,9 +28,17 @@ class UserController {
     async createUser(request) {
         const { name, email, password } = request.body;
 
+        async function createHashPassword(){
+           return bcrypt.hash(password, 8);
+        };
+
         try {
             await prisma.user.create({
-                data: { name, email, password }
+                data: {
+                    name,
+                    email,
+                    password: await createHashPassword()
+                }
             })
             return JSON.parse('{"status":201, "message":"successfully created"}');
         } catch (err) {
