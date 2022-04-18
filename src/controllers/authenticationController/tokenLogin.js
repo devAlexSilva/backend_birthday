@@ -18,7 +18,7 @@ const TokenLogin = async (body) => {
     })
 
     if (!loggedUser || !await bcrypt.compare(password, loggedUser.password))
-        return JSON.parse('{"status": 406, "message":"check the data"}')
+        return JSON.parse('{"message":"check the data"}')
 
     const token = jwt.sign({ id: loggedUser.id }, process.env.AUTH_CONFIG, {
         expiresIn: '1h'

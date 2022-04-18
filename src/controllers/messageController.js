@@ -1,5 +1,6 @@
 //CRUD das menssagens de cada usuario
 
+import { response } from "express";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/prismaClient.js";
 
@@ -22,10 +23,10 @@ class MessageController {
                     userId: Number(userId)
                 }
             })
-            return JSON.parse('{"status":201, "message":"successfully created"}');
+            return response.status(201);
 
         } catch (err) {
-            return JSON.parse('{"status":304, "message":"fail on create"}');
+            return response.status(304);
 
         } finally {
             await prisma.$disconnect();
@@ -46,7 +47,7 @@ class MessageController {
             return result;
 
         } catch (err) {
-            return JSON.parse('{"status":404, "message":"fail on search"}')
+            return response.status(401);
 
         } finally {
             await prisma.$disconnect();
@@ -68,7 +69,7 @@ class MessageController {
             return result;
 
         } catch (err) {
-            return JSON.parse('{"status":404, "message":"fail on search"}')
+            return response.status(401);
 
         } finally {
             await prisma.$disconnect();
@@ -79,21 +80,31 @@ class MessageController {
         const userId = this.handleToken(token);
 
         try {
-            const result = await prisma.message.update({
+            const result = await prisma.message.findFirst({
                 where: {
                     id: Number(id),
-                },
-                data: {
-                    title: body.title,
-                    content: body.content,
-                    dateBirthday: body.dateBirthday
-                    
-                },
-            });
-            return JSON.parse('{"status":200, "message":"updated successfully"}');
+                    AND: {
+                        userId: Number(userId)
+                    }
+                }
+            }).then(async message => {
+                await prisma.message.update({
+                    where: {
+                        id: message.id
+                    },
+                    data: {
+                        title: body.title,
+                        content: body.content,
+                        dateBirthday: body.dateBirthday
+                    }
+
+                })
+            })
+
+            return response.status(200);
 
         } catch (err) {
-            return JSON.parse('{"status":304, "message":"not modified"}');
+            return response.status(304);
 
         } finally {
             await prisma.$disconnect();
@@ -104,16 +115,25 @@ class MessageController {
         const userId = this.handleToken(token);
 
         try {
-            await prisma.message.delete({
+            await prisma.message.findFirst({
                 where: {
                     id: Number(id),
-                    // userId: Number(userId)
+                    AND: {
+                        userId: Number(userId)
+                    }
                 }
+
+            }).then(async message => {
+                await prisma.message.delete({
+                    where: {
+                        id: message.id
+                    }
+                })
             })
-            return JSON.parse('{"status":200, "message":"deleted successfully"}')
+            return response.status(200);
 
         } catch (err) {
-            return JSON.parse('{"status":304, "message":"not modified"}');
+            return response.status(304);
 
         } finally {
             await prisma.$disconnect();

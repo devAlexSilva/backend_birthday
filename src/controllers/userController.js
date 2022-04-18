@@ -45,8 +45,6 @@ class UserController {
             })
             return response.status(201);
         } catch (err) {
-            //acredito que o ideal seja: menssagem -> alto nivel; e o statusCode -> para baixo nível
-            response.statusMessage = 'incompatible data, check and try again';
             return response.status(400);
         }
 
@@ -78,8 +76,8 @@ class UserController {
             await prisma.user.delete({
                 where: { id: Number(id) }
             });
-            return response.statusMessage = 'deleted successfully';
-
+            return response.status(200);
+            
         } catch (err) {
             response.statusMessage = 'fail on delete';
             return response.status(304)
