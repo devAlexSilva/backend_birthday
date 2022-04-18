@@ -1,5 +1,6 @@
 //CRUD de usuarios 
 import bcrypt from 'bcrypt'
+import { response } from 'express';
 import prisma from '../prisma/prismaClient.js';
 
 class UserController {
@@ -16,8 +17,10 @@ class UserController {
                 }
             })
             return currentUser
+        
         } catch (err) {
-            return JSON.parse('{"status":404, "message":"fail on search"}')
+            response.statusMessage = 'fail on search';
+            return response.status(400);
 
         } finally {
             await prisma.$disconnect();
@@ -40,9 +43,11 @@ class UserController {
                     password: await createHashPassword()
                 }
             })
-            return JSON.parse('{"status":201, "message":"successfully created"}');
+            return response.status(201);
         } catch (err) {
-            return JSON.parse('{"status":304, "message":"fail on create"}')
+            //acredito que o ideal seja: menssagem -> alto nivel; e o statusCode -> para baixo nível
+            response.statusMessage = 'incompatible data, check and try again';
+            return response.status(400);
         }
 
         finally {
@@ -58,10 +63,10 @@ class UserController {
                     name: nameToUpdate
                 }
             })
-            return update;
+            return resonse.status(205);
 
         } catch (err) {
-            return JSON.parse('{"status": 304, "message":"fail on update"}')
+            return response.status(304)
         }
         finally {
             await prisma.$disconnect();
@@ -73,10 +78,11 @@ class UserController {
             await prisma.user.delete({
                 where: { id: Number(id) }
             });
-            return JSON.parse('{"status":200, "message":"deleted successfully"}');
+            return response.statusMessage = 'deleted successfully';
 
         } catch (err) {
-            return JSON.parse('{"status":304, "message":"fail on delete"}');
+            response.statusMessage = 'fail on delete';
+            return response.status(304)
 
         }
         finally {
@@ -85,7 +91,6 @@ class UserController {
         }
     }
 }
-
 
 
 export default UserController;

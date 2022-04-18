@@ -10,7 +10,7 @@ login.post("/create", async (request, response) => {
     const client = new UserController();
 
     const data = await client.createUser(request);
-    response.json(data)
+    return response.send(data);
 });
 
 login.post("/login", async (request, response) => {
