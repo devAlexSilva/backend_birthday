@@ -6,7 +6,6 @@ import pkg from 'googleapis'
 const { google } = pkg;
 const OAuth2 = google.auth.OAuth2;
 
-//criando função pra gerar o token refresh
 const createTransporter = async () => {
     const oauth2Client = new OAuth2(
         process.env.CLIENT_OAUTH,
@@ -17,11 +16,12 @@ const createTransporter = async () => {
     oauth2Client.setCredentials({
         refresh_token: process.env.REFRESH_TOKEN
     });
+    //criando função pra gerar o refresh token
 
     const accessToken = await new Promise((resolve, reject) => {
         oauth2Client.getAccessToken((err, token) => {
             if (err) {
-                reject();
+                reject(err);
             }
             resolve(token);
         });

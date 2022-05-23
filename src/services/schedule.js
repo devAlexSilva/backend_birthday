@@ -3,11 +3,11 @@ import pkg from 'node-cron'
 import email from './sendEmail.js'
 import getDatas from '../controllers/emailController/getDataInDb.js'
 import bodyHtml from '../controllers/emailController/bodyEmail.js'
-import { crawler, sign } from './crawler.js'
+import { crawler, sign } from './scraper.js'
 
 
 const { schedule } = pkg;
-const Timer = '0 5 * * *';
+const Timer = '0 05 * * *';
 //const Timer = '29 21 * * *';// timer to test every 20 seconds call the scheduler
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>

@@ -8,11 +8,18 @@ de quem quer lembrar.
 Quando chegar naquela data, ele receberá um email personalizado alertando sobre o aniversario  
 e com o horoscopo do dia para aquela pessoa.
 
-## Apêndice
+[exemplo de Front-end consumindo a API](https://birtdhayweb.vercel.app/)
 
-é possivel o envio pra gmail realizando a configuração de autenticação OAuth.  
+[repositório do Front-end](https://github.com/devAlexSilva/front_birthday)
+
+
+## OBS
+
+é possivel o envio com uma conta gmail realizando a configuração de autenticação OAuth2.  
 Nesse caso, fiz pela _Google Developers_ para gerar um refresh token.
 o que é opcional, basta conferir a [documentação do noidemailer](https://nodemailer.com/smtp/oauth2/)
+
+é recomendado para garantir score no algoritmo usado para verificar spam
 
 ## Melhorias
 

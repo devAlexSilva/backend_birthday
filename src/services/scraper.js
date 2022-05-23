@@ -40,31 +40,39 @@ const selectDate = (date) => {
 }
 
 const sign = selectDate(currentDate);
+const timeInSeconds = 90 * 1000
 
 const crawler = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(`https://www.metropoles.com/vida-e-estilo/horoscopo/horoscopo-2022-confira-a-previsao-de-hoje-${currentDate}-para-seu-signo`);
+  page.setDefaultNavigationTimeout(timeInSeconds)
 
-  const getSigno = await page.evaluate(() => {
-    const nodeList = document.querySelectorAll('.m-wrapper .m-content .columns');
-    let arrayList = [...nodeList];
+  try {
+    await page.goto(`https://www.metropoles.com/vida-e-estilo/horoscopo/horoscopo-2022-confira-a-previsao-de-hoje-${currentDate}-para-seu-signo`);
+    await page.waitForSelector('.m-wrapper .m-content .columns')
 
-    //take the field of the crawler's results according with the sign (date)
-    let formated = arrayList.map(item => {
-      return obj = {
-        imgOfSign: item.children[0].dataset.src,
-        textOfSign: item.children[1].innerHTML //options: innerText or innerHTML
-      }
-    });
+    const getSigno = await page.evaluate(() => {
+      const nodeList = document.querySelectorAll('.m-wrapper .m-content .columns');
+      let arrayList = [...nodeList];
 
-    return formated;
-  })
+      //take the field of the crawler's results according with the sign (date)
+      let formated = arrayList.map(item => {
+        return obj = {
+          imgOfSign: item.children[0].dataset.src,
+          textOfSign: item.children[1].innerHTML //options: innerText or innerHTML
+        }
+      });
 
-  await browser.close();
-  return getSigno
+      return formated;
+    })
+
+    await browser.close();
+    return getSigno
+  }
+  catch (err) {
+    console.log(err)
+  }
 }
-
 export { crawler, sign }
 
 //make a algorithm to select the sign according to the date
