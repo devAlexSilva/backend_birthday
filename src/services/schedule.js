@@ -7,11 +7,11 @@ import { crawler, sign } from './scraper.js'
 
 
 const { schedule } = pkg;
-const Timer = '0 05 * * *';
+const Timer = '06 04 * * *';
 //const Timer = '29 21 * * *';// timer to test every 20 seconds call the scheduler
 
 // '*/5 * * * * *' example: every 5 seconds = */5 <(seconds){optional} (minutes) (hour) (days) (month) (day of week)>
-//all day, all month, ever 3 hour verify in DB if there is any message for the next day
+//all day, all month, ever 5 hour verify in DB if there is any message for the next day
 const startSchedule = schedule(`${Timer}`, async () => {
     const matchMessage = await getDatas();
 
